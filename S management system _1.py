@@ -5,17 +5,25 @@ def add_student():
         name = input("Enter Name :")
         course = input("Enter Course :")
         Marks = float(input("Enter Marks :"))
-        if Marks<0 or Marks>100:
-            print("Invalide") 
-            return None
-        
+       
+        while True:
+            if Marks<0 or Marks>100:
+                print("Invalide") 
+                Marks = float(input("Enter valide Marks :"))
+            else:
+                break
+            
+            
         student = {
             "id": student_id,
             "name": name,
             "course": course,
             "marks": Marks
             }
-        return student
+       
+        students.append(student)
+        
+        print("Student added Sucessfully!!")
 
 def view_students():
         if len(students) == 0:
@@ -25,8 +33,68 @@ def view_students():
         for student in students:
             print(student)
 
-def Search_student():
-    print("Hello")
+def search_student():
+    student_id = int(input("Enter Student ID: "))
+    
+    for student in students:
+        if student["id"] == student_id:
+            print("Student Found!")
+            print("ID     :", student["id"])
+            print("Name   :", student["name"])
+            print("Course :", student["course"])
+            print("Marks  :", student["marks"])
+            return
+
+    print("Student Not Found!")   
+
+def update_student():
+    search = int(input("Enter student id :"))
+    for student in students:
+        if student["id"] == search:
+            print("student found!!")
+            print("1.Update Name")
+            print("2.Update Course")
+            print("3.Update Marks")
+            print("4.Cancel")
+
+            choice = input("enter your choice what you wanty to update:")
+
+            if choice == "1":
+                n_name = input("enter new name:")
+                student["name"] = n_name
+                print("Name Updated")
+            elif choice =="2":
+                n_course = input("enter new course:")
+                student["course"] = n_course
+                print("Course updated")
+            elif choice =="3":
+                n_marks = float(input("enter new Marks:"))
+                if n_marks < 0 or n_marks > 100:
+                    print("Invalid marks!")
+                    return
+                student["marks"] = n_marks
+                print("Marks updater")
+            elif choice =="4":
+                print("Update cancile!")
+            else:
+                print("Invalide Choice!")
+            return
+
+    print("Student Not found!")
+
+def delete_student():
+    select = int(input("enter student id :"))
+    for student in students :
+        if student["id"] == select:
+            print("student found!")
+            comfirm= input("are you sure?(yes/no):")
+            if comfirm.lower()== "yes":
+                students.remove(student)
+                print("Deleted!")
+            else:
+                print("Delete cancelled!")
+            return
+
 
 
 while True:
@@ -41,26 +109,20 @@ while True:
     choice = input("Enter your choice: ")
 
     if choice == "1":
-       student = add_student()
-
-       if student: 
-            students.append(student)
-            print("Student Added Successfully!")
+         add_student()
 
     elif choice == "2":
         view_students()
 
     elif choice =="3":
-        Search_student()
+        search_student()
 
 
     elif choice =="4":
-        print("a")
-
+        update_student()
 
     elif choice =="5":
-        print("a")
-
+        delete_student()
 
     elif choice == "6":
         print("Thank You!")
